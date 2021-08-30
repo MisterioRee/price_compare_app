@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:price_compare/components/customShimmer.dart';
 import 'package:price_compare/models/product.dart';
-import 'package:price_compare/pages/productDetails.dart';
+import 'package:price_compare/pages/productDetailPage.dart';
 import 'package:price_compare/services/favoriteProductsService.dart';
 import 'package:price_compare/theme/themeStyles.dart';
 
@@ -26,7 +26,7 @@ class FavoriteProducts extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Get.to(
-                      ProductDetails(
+                      () => ProductDetails(
                         product: product,
                       ),
                     );
@@ -80,9 +80,18 @@ class FavoriteProducts extends StatelessWidget {
                       "\$${product.price}",
                       style: ThemeStyles.thinAndBigText,
                     ),
-                    FaIcon(
-                      FontAwesomeIcons.solidHeart,
-                      color: ThemeColor.primeryColor,
+                    GestureDetector(
+                      onTap: () {
+                        product.isLiked
+                            ? _.removeFromFavorite(product)
+                            : _.addToFavorite(product);
+                      },
+                      child: FaIcon(
+                        product.isLiked
+                            ? FontAwesomeIcons.solidHeart
+                            : FontAwesomeIcons.heart,
+                        color: ThemeColor.primeryColor,
+                      ),
                     )
                   ],
                 )

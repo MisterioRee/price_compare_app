@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 
 class CustomShimmer extends StatelessWidget {
-  final Color baseColor;
-  final Color highlightColor;
+  final Color? baseColor;
+  final Color? highlightColor;
   CustomShimmer({this.baseColor, this.highlightColor});
 
   @override
@@ -26,8 +26,8 @@ class CustomShimmer extends StatelessWidget {
 }
 
 class GridShimmer extends StatelessWidget {
-  final Color baseColor;
-  final Color highlightColor;
+  final Color? baseColor;
+  final Color? highlightColor;
   GridShimmer({this.baseColor, this.highlightColor});
 
   @override

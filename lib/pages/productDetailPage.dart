@@ -6,7 +6,7 @@ import 'package:price_compare/theme/themeStyles.dart';
 
 class ProductDetails extends StatelessWidget {
   final Product product;
-  ProductDetails({@required this.product});
+  ProductDetails({required this.product});
 
   Widget _buildProductProfile() {
     return Row(

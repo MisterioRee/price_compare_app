@@ -3,14 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:price_compare/models/database.dart';
 import 'package:price_compare/models/product.dart';
 
-enum HomePageView { GridView, ListView }
+enum PageListView { GridView, ListView }
 
 class HomeService extends GetxController {
   bool isLoading = false;
   List<Product> products = [];
-  HomePageView homePageView = HomePageView.GridView;
+  PageListView homePageView = PageListView.GridView;
   RangeValues currentRangeValues = const RangeValues(10, 1000);
 
   _setLoadingStatus(bool status) {
@@ -18,7 +19,7 @@ class HomeService extends GetxController {
     update();
   }
 
-  setHomePageView(HomePageView view) {
+  setHomePageView(PageListView view) {
     this.homePageView = view;
     update();
   }
@@ -41,6 +42,20 @@ class HomeService extends GetxController {
       _setLoadingStatus(false);
     }
     _setLoadingStatus(false);
+  }
+
+  addToFavorite(Product product) {
+    DBProvider.db.addProduct(product);
+    var index = this.products.indexOf(product);
+    this.products[index].isLiked = true;
+    update();
+  }
+
+  removeFromFavorite(Product product) {
+    DBProvider.db.deleteProduct(product.id!);
+    var index = this.products.indexOf(product);
+    this.products[index].isLiked = false;
+    update();
   }
 
   @override

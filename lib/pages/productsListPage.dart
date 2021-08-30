@@ -6,12 +6,13 @@ import 'package:price_compare/components/boxTextField.dart';
 import 'package:price_compare/components/customShimmer.dart';
 import 'package:price_compare/models/product.dart';
 import 'package:price_compare/pages/favoriteProducts.dart';
-import 'package:price_compare/pages/productDetails.dart';
-import 'package:price_compare/services/homeService.dart';
+import 'package:price_compare/pages/productDetailPage.dart';
+import 'package:price_compare/services/productsListService.dart';
 import 'package:price_compare/theme/themeStyles.dart';
 
-class HomePage extends StatelessWidget {
+class ProductsListPage extends StatelessWidget {
   final _ = Get.put(HomeService());
+
   Widget _buildHeadRowBox() {
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -26,7 +27,7 @@ class HomePage extends StatelessWidget {
             ),
             child: GestureDetector(
               onTap: () {
-                Get.to(FavoriteProducts());
+                Get.to(() => FavoriteProducts());
               },
               child: FaIcon(
                 FontAwesomeIcons.heart,
@@ -85,7 +86,7 @@ class HomePage extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Get.to(
-                      ProductDetails(
+                      () => ProductDetails(
                         product: product,
                       ),
                     );
@@ -104,7 +105,7 @@ class HomePage extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     Get.to(
-                      ProductDetails(
+                      () => ProductDetails(
                         product: product,
                       ),
                     );
@@ -139,9 +140,18 @@ class HomePage extends StatelessWidget {
                       "\$${product.price}",
                       style: ThemeStyles.thinAndBigText,
                     ),
-                    FaIcon(
-                      FontAwesomeIcons.heart,
-                      color: ThemeColor.primeryColor,
+                    GestureDetector(
+                      onTap: () {
+                        product.isLiked
+                            ? _.removeFromFavorite(product)
+                            : _.addToFavorite(product);
+                      },
+                      child: FaIcon(
+                        product.isLiked
+                            ? FontAwesomeIcons.solidHeart
+                            : FontAwesomeIcons.heart,
+                        color: ThemeColor.primeryColor,
+                      ),
                     )
                   ],
                 )
@@ -164,7 +174,7 @@ class HomePage extends StatelessWidget {
             child: GestureDetector(
               onTap: () {
                 Get.to(
-                  ProductDetails(
+                  () => ProductDetails(
                     product: product,
                   ),
                 );
@@ -193,7 +203,7 @@ class HomePage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Get.to(
-                        ProductDetails(
+                        () => ProductDetails(
                           product: product,
                         ),
                       );
@@ -209,7 +219,7 @@ class HomePage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Get.to(
-                        ProductDetails(
+                        () => ProductDetails(
                           product: product,
                         ),
                       );
@@ -249,7 +259,7 @@ class HomePage extends StatelessWidget {
 
   _showFilters() {
     showModalBottomSheet(
-        context: Get.context,
+        context: Get.context!,
         builder: (context) {
           return Container(
             color: Colors.grey[300],
@@ -290,12 +300,12 @@ class HomePage extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              _.setHomePageView(HomePageView.ListView);
+                              _.setHomePageView(PageListView.ListView);
                             },
                             child: Container(
                               padding: EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                color: _.homePageView == HomePageView.GridView
+                                color: _.homePageView == PageListView.GridView
                                     ? ThemeColor.primeryColor
                                     : Colors.white,
                                 borderRadius: BorderRadius.all(
@@ -304,7 +314,7 @@ class HomePage extends StatelessWidget {
                               ),
                               child: FaIcon(
                                 FontAwesomeIcons.thList,
-                                color: _.homePageView == HomePageView.ListView
+                                color: _.homePageView == PageListView.ListView
                                     ? ThemeColor.primeryColor
                                     : Colors.white,
                               ),
@@ -312,12 +322,12 @@ class HomePage extends StatelessWidget {
                           ),
                           GestureDetector(
                             onTap: () {
-                              _.setHomePageView(HomePageView.GridView);
+                              _.setHomePageView(PageListView.GridView);
                             },
                             child: Container(
                               padding: EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                                color: _.homePageView == HomePageView.ListView
+                                color: _.homePageView == PageListView.ListView
                                     ? ThemeColor.primeryColor
                                     : Colors.white,
                                 borderRadius: BorderRadius.all(
@@ -326,7 +336,7 @@ class HomePage extends StatelessWidget {
                               ),
                               child: FaIcon(
                                 FontAwesomeIcons.thLarge,
-                                color: _.homePageView == HomePageView.GridView
+                                color: _.homePageView == PageListView.GridView
                                     ? ThemeColor.primeryColor
                                     : Colors.white,
                               ),
@@ -347,14 +357,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      appBar: _appBar(AppBar().preferredSize.height),
+      appBar: _appBar(AppBar().preferredSize.height) as PreferredSizeWidget?,
       body: GetBuilder<HomeService>(
         builder: (__) => _.isLoading
             ? GridShimmer(
                 baseColor: Colors.grey[300],
                 highlightColor: Colors.grey[100],
               )
-            : _.homePageView == HomePageView.GridView
+            : _.homePageView == PageListView.GridView
                 ? GridView.count(
                     crossAxisCount: 2,
                     shrinkWrap: true,

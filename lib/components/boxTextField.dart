@@ -5,16 +5,16 @@ class BoxTextField extends StatelessWidget {
   final Function onChange;
   final String label;
   final String hintText;
-  final String errorText;
+  final String? errorText;
   final String initialValue;
   final TextInputType keyboard;
 
   BoxTextField({
-    @required this.onChange,
-    @required this.label,
-    @required this.hintText,
-    @required this.initialValue,
-    @required this.keyboard,
+    required this.onChange,
+    required this.label,
+    required this.hintText,
+    required this.initialValue,
+    required this.keyboard,
     this.errorText,
   });
 
@@ -68,17 +68,17 @@ class BoxTextFieldWithTextChange extends StatelessWidget {
   final Function onChange;
   final String label;
   final String hintText;
-  final String errorText;
+  final String? errorText;
   final String text;
   final TextInputType keyboard;
-  final FocusNode myFocusNode;
+  final FocusNode? myFocusNode;
 
   BoxTextFieldWithTextChange(
-      {@required this.onChange,
-      @required this.label,
-      @required this.hintText,
-      @required this.text,
-      @required this.keyboard,
+      {required this.onChange,
+      required this.label,
+      required this.hintText,
+      required this.text,
+      required this.keyboard,
       this.errorText,
       this.myFocusNode});
 
@@ -134,19 +134,19 @@ class BoxTextFieldWithSuffext extends StatelessWidget {
   final Function onChange;
   final String label;
   final String hintText;
-  final String errorText;
+  final String? errorText;
   final String initialValue;
   final TextInputType keyboard;
   final Widget suffex;
   final bool obscured;
 
   BoxTextFieldWithSuffext({
-    @required this.onChange,
-    @required this.label,
-    @required this.hintText,
-    @required this.initialValue,
-    @required this.keyboard,
-    @required this.suffex,
+    required this.onChange,
+    required this.label,
+    required this.hintText,
+    required this.initialValue,
+    required this.keyboard,
+    required this.suffex,
     this.errorText,
     this.obscured = false,
   });
@@ -204,18 +204,18 @@ class BoxTextFieldWithPrefix extends StatelessWidget {
   final Function onChange;
   final String label;
   final String hintText;
-  final String errorText;
+  final String? errorText;
   final String initialValue;
   final TextInputType keyboard;
   final Widget prefix;
 
   BoxTextFieldWithPrefix({
-    @required this.onChange,
-    @required this.label,
-    @required this.hintText,
-    @required this.initialValue,
-    @required this.keyboard,
-    @required this.prefix,
+    required this.onChange,
+    required this.label,
+    required this.hintText,
+    required this.initialValue,
+    required this.keyboard,
+    required this.prefix,
     this.errorText,
   });
 

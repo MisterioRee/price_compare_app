@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:price_compare/theme/themeStyles.dart';
 
 class RoundedShapeButton extends StatelessWidget {
-  final String title;
+  final String? title;
   final Function onClick;
-  final Color bgColor;
-  final TextStyle textStyle;
+  final Color? bgColor;
+  final TextStyle? textStyle;
   RoundedShapeButton(
-      {this.title, @required this.onClick, this.bgColor, this.textStyle});
+      {this.title, required this.onClick, this.bgColor, this.textStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class RoundedShapeButton extends StatelessWidget {
       width: double.infinity,
       child: RaisedButton(
         elevation: 0.0,
-        onPressed: onClick,
+        onPressed: onClick as void Function()?,
         padding: EdgeInsets.all(10.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
